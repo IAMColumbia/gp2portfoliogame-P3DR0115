@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ObserverPattern.Snake">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Snake.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObserverPattern.SnakeSubject">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAIAAAAAAAAAAIAAAABEAAAAAAQAAAA=</HashCode>
+      <FileName>SnakeSubject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ObserverPattern.BasicGuard">
+    <Position X="8" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BasicGuard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObserverPattern.SnakeObserver">
+    <Position X="8" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAEAAAQAAAAAAA=</HashCode>
+      <FileName>SnakeObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ObserverPattern.Character">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEQABIgQAAAAAAAAAAAAAACCAAEAAAISAQAAAAAAAA=</HashCode>
+      <FileName>Character.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObserverPattern.WeaponStrategy.Weapon">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAACgAAAAAAAEAAAAAAwAAAAEAAAACAAAAIAAAAA=</HashCode>
+      <FileName>WeaponStrategy\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObserverPattern.Weapons.M1911" Collapsed="true">
+    <Position X="11" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapons\M1911.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObserverPattern.Weapons.AK47" Collapsed="true">
+    <Position X="14.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapons\AK47.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ObserverPattern.ISnakeSubject">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAIAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISnakeSubject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ObserverPattern.ISnakeObserver">
+    <Position X="8" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>ISnakeObserver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ObserverPattern.ActionState" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAJAABAAQAgAIAAAAAAAQAAAIEAIAAAAAAAAAQA=</HashCode>
+      <FileName>ActionState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
