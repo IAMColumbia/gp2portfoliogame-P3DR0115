@@ -18,7 +18,7 @@ namespace ObserverPattern
         public int HealthPoints { get { return _HealthPoints; } set { _HealthPoints = value; } }
 
         private Weapon _Weapon;
-        public Weapon weapon { get { return _Weapon; } set { _Weapon = value; } }
+        //public Weapon weapon { get { return _Weapon; } set { _Weapon = value; } }
 
 
         public Character()
@@ -58,15 +58,15 @@ namespace ObserverPattern
             this.location.Z--;
         }
 
-        internal void Reload()
-        {
-            this.weapon.Reload();
-        }
+        //internal void Reload()
+        //{
+        //    this.weapon.Reload();
+        //}
 
-        internal void Fire()
-        {
-            this.weapon.Fire(this.location);
-        }
+        //internal void Fire()
+        //{
+        //    this.weapon.Fire(this.location);
+        //}
         
     }
 }

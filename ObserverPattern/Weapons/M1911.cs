@@ -9,11 +9,11 @@ namespace ObserverPattern.Weapons
     {
         public M1911()
         {
-            this.Name = "M1911";
-            this.Damage = 5;
-            this.MagCapacity = MagAmmo = 7;
-            this.ReserveAmmo = 21;
-            ReserveAmmoCapacity = 54;
+            //this.Name = "M1911";
+            //this.Damage = 5;
+            //this.MagCapacity = MagAmmo = 7;
+            //this.ReserveAmmo = 21;
+            //ReserveAmmoCapacity = 54;
         }
     }
 }

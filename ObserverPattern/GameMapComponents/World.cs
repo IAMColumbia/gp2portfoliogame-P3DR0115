@@ -134,32 +134,48 @@ namespace ObserverPattern.GameMapComponents
 
             //Location lastLocale = entity.lastLocation;
 
-            int roomX, roomY, tileX, tileY;
+            int roomX, roomY, tileX, tileY, target;
             //int roomXLast, roomYLast, tileXLast, tileYLast;
 
-            roomX = 0;// (int)(locale.X / rooms.GetLength(0));
+            roomX = target = 0;// (int)(locale.X / rooms.GetLength(0));
             tileX = locale.X;
             
             for (int x = 0; x < rooms.GetLength(0); x++)
             {
-                if (tileX > rooms[x, 0].xDimension)
+                for(int l = 0; l < rooms[x, 0].xDimension; l++)
                 {
-                    roomX++;
+                    target += rooms[x, 0].xDimension;
+                    if (tileX >= target)
+                    {
+                        roomX++;
+                    }
+                    else
+                        break;
                 }
-                else
-                    break;
+                
             }
 
-            roomY = 0; // (int)(locale.Y / rooms.GetLength(1));
+            roomY = target = 0; // (int)(locale.Y / rooms.GetLength(1));
             tileY = locale.Y;
             for (int y = 0; y < rooms.GetLength(0); y++)
             {
-                if (tileY > rooms[y, 0].yDimension)
+                for (int l = 0; l < rooms[0, y].yDimension; l++)
                 {
-                    roomY++;
+                    target += rooms[0, y].yDimension;
+                    if (tileY >= target)
+                    {
+                        roomY++;
+                    }
+                    else
+                        break;
                 }
-                else
-                    break;
+
+                //if (tileY >= rooms[y, 0].yDimension)
+                //{
+                //    roomY++;
+                //}
+                //else
+                //    break;
             }
 
             tileX = locale.X;
@@ -202,6 +218,8 @@ namespace ObserverPattern.GameMapComponents
             rooms[roomX, roomY].tiles[tileX, tileY].occupied = occupied;
             rooms[roomX, roomY].tiles[tileX, tileY].entity = entity;
 
+            if(!occupied)
+                rooms[roomX, roomY].DisplayRoom(true);
             //rooms[roomXLast, roomYLast].tiles[tileXLast, tileYLast].occupied = false;
         }
 

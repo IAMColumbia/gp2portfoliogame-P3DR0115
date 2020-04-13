@@ -78,7 +78,7 @@ namespace ObserverPattern
         {
             Console.Clear();
             world.UpdateEntityTiles();
-            world.DisplayRoom(Player);
+            //world.DisplayRoom(Player);
             //world.DisplayAllRooms();
         }
 

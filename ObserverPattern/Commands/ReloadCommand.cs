@@ -12,10 +12,10 @@ namespace ObserverPattern.Commands
             this.CommandName = "Reload";
         }
 
-        public override void Execute(Character go)
-        {
-            go.Reload();
-            base.Execute(go);
-        }
+        //public override void Execute(Character go)
+        //{
+        //    go.Reload();
+        //    base.Execute(go);
+        //}
     }
 }

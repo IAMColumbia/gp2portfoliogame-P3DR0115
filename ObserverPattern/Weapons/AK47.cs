@@ -9,11 +9,11 @@ namespace ObserverPattern.Weapons
     {
         public AK47()
         {
-            this.Name = "AK-47";
-            this.Damage = 10;
-            this.MagCapacity = MagAmmo = 30;
-            this.ReserveAmmo = 60;
-            ReserveAmmoCapacity = 120;
+            //this.Name = "AK-47";
+            //this.Damage = 10;
+            //this.MagCapacity = MagAmmo = 30;
+            //this.ReserveAmmo = 60;
+            //ReserveAmmoCapacity = 120;
         }
     }
 }

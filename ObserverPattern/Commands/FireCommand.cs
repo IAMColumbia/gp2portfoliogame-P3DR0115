@@ -12,10 +12,10 @@ namespace ObserverPattern.Commands
             this.CommandName = "Fire";
         }
 
-        public override void Execute(Character go)
-        {
-            go.Fire();
-            base.Execute(go);
-        }
+        //public override void Execute(Character go)
+        //{
+        //    go.Fire();
+        //    base.Execute(go);
+        //}
     }
 }
