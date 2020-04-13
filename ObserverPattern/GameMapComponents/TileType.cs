@@ -12,6 +12,7 @@ namespace ObserverPattern.GameMapComponents
         UpStairs,
         DownStairs,
         LightCover,
-        FullCover
+        FullCover,
+        Occupied
     }
 }

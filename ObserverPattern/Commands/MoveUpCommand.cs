@@ -14,7 +14,7 @@ namespace ObserverPattern.Commands
 
         public UndoCommand UndoCommand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public override void Execute(Character go)
+        public override void Execute(GameComponent go)
         {
             go.MoveUp();
             base.Execute(go);

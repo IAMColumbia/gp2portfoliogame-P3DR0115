@@ -13,7 +13,7 @@ namespace ObserverPattern.CommandPattern
             this.CommandName = "Base Command";
         }
 
-        public virtual void Execute(Character go)
+        public virtual void Execute(GameComponent go)
         {
             this.Log();
         }
@@ -24,7 +24,7 @@ namespace ObserverPattern.CommandPattern
             Console.WriteLine($"{this.CommandName} executed");
         }
 
-        protected virtual void Log(Character go)
+        protected virtual void Log(GameComponent go)
         {
             // Log basic command to console
             this.Log();

@@ -6,6 +6,6 @@ namespace ObserverPattern
 {
     public interface ISnakeObserver : IObserver
     {
-        void ObserverUpdate(ActionState state);
+        void ObserverUpdate(SnakeState state);
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using ObserverPattern.CommandPattern;
 using ObserverPattern.Commands;
-using ObserverPattern.Weapons;
 using ObserverPattern.GameMapComponents;
 
 namespace ObserverPattern
@@ -16,30 +15,35 @@ namespace ObserverPattern
 
 
         private int Turn;
-        public static GameMap gameMap;
-        public static List<Character> characters;
-        public Snake Player;
+        public World world;
+        public static Snake Player;
         public BasicGuard Enemy;
 
         public Game()
         {
             Console.Title = "Watered Down Roguelike!";
             Turn = 0;
-            gameMap = new GameMap();
+
+            world = new World();
             Player = new Snake();
-            Player.weapon = new M1911();
-            Enemy = new BasicGuard(this, Player);
-            characters = new List<Character>();
-            characters.Add(Player);
-            characters.Add(Enemy);
+            world.AddEntity(Player);
+
+            //world.DisplayAllRooms();
+            //Enemy = new BasicGuard(this, Player.);
             Run();
         }
 
         public void Run()
         {
             ShowHelp();
-            Test();
-            while(isPlaying)
+            InputLoop();
+        }
+
+        private void InputLoop()
+        {
+            world.DisplayRoom(Player);
+
+            while (isPlaying)
             {
                 Console.Write("Please enter a key: ");
                 keyInput = Console.ReadKey();
@@ -62,11 +66,20 @@ namespace ObserverPattern
                 if (command != null && isPlaying)
                 {
                     command.Execute(Player);
+                    WorldUpdate();
                     Test();
                 }
 
                 Turn++;
             }
+        }
+
+        public void WorldUpdate()
+        {
+            Console.Clear();
+            world.UpdateEntityTiles();
+            world.DisplayRoom(Player);
+            //world.DisplayAllRooms();
         }
 
         private static ICommand GetCommandFromKey(ConsoleKeyInfo ki)
@@ -94,16 +107,6 @@ namespace ObserverPattern
                     {
                         command = new MoveLeftCommand();
                         // 
-                        break;
-                    }
-                case ConsoleKey.R:
-                    {
-                        command = new ReloadCommand();
-                        break;
-                    }
-                case ConsoleKey.J:
-                    {
-                        command = new FireCommand();
                         break;
                     }
 
@@ -138,7 +141,8 @@ namespace ObserverPattern
 
         private void Test()
         {
-            Console.WriteLine($"{Player.location.ToTestString()}, {Player.weapon.ToTestString()}");
+            Console.WriteLine($"Player Location: {Player.location.ToTestString()}");
+            Console.WriteLine($"Player's Last L:{Player.lastLocation.ToTestString()}");
         }
     }
 }

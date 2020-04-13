@@ -19,7 +19,7 @@ namespace ObserverPattern
 
         public string ToTestString()
         {
-            return $"Player Location: ({X}, {Y}, {Z})";
+            return $"({X}, {Y}, {Z})";
         }
     }
 }

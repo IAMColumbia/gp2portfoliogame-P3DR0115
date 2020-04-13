@@ -4,8 +4,9 @@ using System.Text;
 
 namespace ObserverPattern
 {
-    public class SnakeObserver : Character, ISnakeObserver
+    public class SnakeObserver : GameComponent, ISnakeObserver
     {
+        GuardState state;
         ISnakeSubject snakeSub;
 
         public SnakeObserver(Game game, ISnakeSubject snek)
@@ -18,66 +19,51 @@ namespace ObserverPattern
             throw new NotImplementedException();
         }
 
-        public void ObserverUpdate(ActionState state)
+        public void ObserverUpdate(SnakeState state)
         {
             switch (state)
             {
-                case ActionState.Spawning:
+                case SnakeState.Spawning:
                     {
 
                         break;
                     }
-                case ActionState.Hiding:
+                case SnakeState.Hiding:
                     {
 
                         break;
                     }
-                case ActionState.Crawling:
+                case SnakeState.Crawling:
                     {
 
                         break;
                     }
-                case ActionState.Sneaking:
+                case SnakeState.Sneaking:
                     {
 
                         break;
                     }
-                case ActionState.Standing:
+                case SnakeState.Standing:
                     {
 
                         break;
                     }
-                case ActionState.Walking:
+                case SnakeState.Walking:
                     {
 
                         break;
                     }
-                case ActionState.Running:
+                case SnakeState.Running:
                     {
 
                         break;
                     }
-                case ActionState.Patrolling:
+                case SnakeState.Shooting:
                     {
 
                         break;
                     }
-                case ActionState.Searching:
-                    {
-
-                        break;
-                    }
-                case ActionState.Meleeing:
-                    {
-
-                        break;
-                    }
-                case ActionState.Shooting:
-                    {
-
-                        break;
-                    }
-                case ActionState.Dying:
+                case SnakeState.Dying:
                     {
 
                         break;

@@ -6,6 +6,6 @@ namespace ObserverPattern.CommandPattern
 {
     public interface ICommand
     {
-        void Execute(Character go);
+        void Execute(GameComponent go);
     }
 }

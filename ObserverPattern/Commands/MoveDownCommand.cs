@@ -12,7 +12,7 @@ namespace ObserverPattern.Commands
             this.CommandName = "Move Down";
         }
 
-        public override void Execute(Character go)
+        public override void Execute(GameComponent go)
         {
             go.MoveDown();
             base.Execute(go);

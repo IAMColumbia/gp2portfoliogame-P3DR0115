@@ -6,12 +6,14 @@ namespace ObserverPattern
 {
     public class Snake : SnakeSubject
     {
+        public int HealthPoints;
+
         public Snake()
         {
-            this.location = new Location();
-            this.HealthPoints = 20;
-            observers = new List<ISnakeObserver>();
+            this.location = new Location(1, 1, 0);
+            this.lastLocation = new Location();
+            this.representation = '@';
         }
-        
+
     }
 }

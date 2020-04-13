@@ -4,8 +4,9 @@ using System.Text;
 
 namespace ObserverPattern
 {
-    public class SnakeSubject : Character, ISnakeSubject
+    public class SnakeSubject : GameComponent, ISnakeSubject
     {
+        SnakeState state;
         protected List<ISnakeObserver> _observers;
         public List<ISnakeObserver> observers{ get { return _observers; } set { _observers = value; } }
 
@@ -33,7 +34,7 @@ namespace ObserverPattern
         {
             foreach(ISnakeObserver o in _observers)
             {
-                o.ObserverUpdate(State);
+                o.ObserverUpdate(state);
             }
         }
     }
