@@ -218,7 +218,7 @@ namespace ObserverPattern.GameMapComponents
             rooms[roomX, roomY].tiles[tileX, tileY].occupied = occupied;
             rooms[roomX, roomY].tiles[tileX, tileY].entity = entity;
 
-            if(!occupied)
+            if(occupied)
                 rooms[roomX, roomY].DisplayRoom(true);
             //rooms[roomXLast, roomYLast].tiles[tileXLast, tileYLast].occupied = false;
         }
@@ -227,8 +227,8 @@ namespace ObserverPattern.GameMapComponents
         {
             foreach(GameComponent cg in Entities)
             {
-                UpdateTileEntity(cg);
                 UpdateTileEntity(cg, false);
+                UpdateTileEntity(cg);
             }
         }
 
