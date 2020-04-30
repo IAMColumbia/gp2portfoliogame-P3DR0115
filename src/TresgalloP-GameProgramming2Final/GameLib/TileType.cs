@@ -13,6 +13,7 @@ namespace TresgalloP_GameProgramming2Final.GameLib
         DownStairs,
         LightCover,
         FullCover,
-        Occupied
+        Occupied,
+        Goal
     }
 }

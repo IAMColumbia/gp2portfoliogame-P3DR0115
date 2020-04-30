@@ -51,6 +51,25 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 }
                 yCurrentRoomDraw++;
             }
+
+            Random r = new Random();
+            int x, y, a, b;
+            x = r.Next(rooms.GetLength(0));
+            y = r.Next(rooms.GetLength(1));
+
+            do
+            {
+                a = r.Next(rooms[x, y].xDimension - 2);
+            } while (a == 0);
+
+            do
+            {
+                b = r.Next(rooms[x, y].yDimension - 2);
+            } while (b == 0);
+
+            rooms[x, y].tiles[a, b].tileType = TileType.Goal;
+            rooms[x, y].tiles[a, b].UpdateTileRepresentation(TileType.Goal);
+
         }
 
         public void DisplayAllRooms()
@@ -218,6 +237,12 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 if(!last)
                     entity.locationInfo.UpdateTerrain(target);
                 
+                if(rooms[roomX, roomY].tiles[tileX, tileY].tileType == TileType.Goal)
+                {
+                    Game.isPlaying = false;
+                    Game.winCondition = true;
+                }
+
                 rooms[roomX, roomY].tiles[tileX, tileY].occupied = occupied;
                 rooms[roomX, roomY].tiles[tileX, tileY].entity = entity;
             }

@@ -187,12 +187,12 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                     }
                 case TileType.UpStairs:
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         break;
                     }
                 case TileType.DownStairs:
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         break;
                     }
                 case TileType.LightCover:
@@ -208,6 +208,11 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 case TileType.Occupied:
                     {
                         Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    }
+                case TileType.Goal:
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         break;
                     }
 

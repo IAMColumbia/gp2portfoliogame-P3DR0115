@@ -10,7 +10,8 @@ namespace TresgalloP_GameProgramming2Final
 {
     public class Game
     {
-        bool isPlaying = true;
+        public static bool isPlaying = true;
+        public static bool winCondition = false;
         public static CommandWUndo command = null;
         ConsoleKeyInfo keyInput;
         string consoleInput;
@@ -75,6 +76,11 @@ namespace TresgalloP_GameProgramming2Final
                 }
 
                 Turn++;
+            }
+
+            if(winCondition)
+            {
+                Console.WriteLine("YOU WIN! You reached the goal!");
             }
         }
 
@@ -145,7 +151,7 @@ namespace TresgalloP_GameProgramming2Final
         private void Test()
         {
             Console.WriteLine($"Player Location: {player.locationInfo.location.ToTestString()}");
-            Console.WriteLine($"Player's Last L:{player.locationInfo.lastLocation.ToTestString()}");
+            Console.WriteLine($"Player's Last L: {player.locationInfo.lastLocation.ToTestString()}");
         }
     }
 }

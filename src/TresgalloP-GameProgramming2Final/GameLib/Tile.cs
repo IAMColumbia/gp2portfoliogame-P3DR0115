@@ -18,7 +18,12 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             location = Coordinates;
             tileType = tileTerrain;
 
-            switch (tileType)
+            UpdateTileRepresentation(tileType);
+        }
+
+        public void UpdateTileRepresentation(TileType type)
+        {
+            switch (type)
             {
                 case TileType.Floor:
                     {
@@ -53,6 +58,11 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 case TileType.FullCover:
                     {
                         representation = 'C';
+                        break;
+                    }
+                case TileType.Goal:
+                    {
+                        representation = 'G';
                         break;
                     }
             }
