@@ -23,7 +23,7 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             tiles = new Tile[xDimension, yDimension];
             // Get edges
             Location loc = new Location(World.xCurrentGen, World.yCurrentGen, World.zCurrentGen);
-            Location worldRef = loc; // Save the "corner" coordinates.
+            Location worldRef = new Location(World.xCurrentGen, World.yCurrentGen, World.zCurrentGen); ; // Save the "corner" coordinates.
             for (int i = 0; i < yDimension; i++)
             {
 
@@ -39,8 +39,14 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 //        )
                 //    tiles[hor, ver] = new Tile(loc, TileType.Door);
 
-                if (i == (int)(xDimension / 2) && (loc.Y == yDimension - 1))
-                    tiles[0, i] = new Tile(loc, TileType.Door);
+                //if(i == (int)(yDimension / 2) )
+                //{
+                //    tiles[0, i] = new Tile(loc, TileType.Door);
+                //}
+
+                //if (i == (int)(xDimension / 2) && (loc.Y == yDimension - 1))
+                //    tiles[0, i] = new Tile(loc, TileType.Door);
+                
                 //else
                 //    tiles[0, i] = new Tile(loc, TileType.Door);
 
@@ -51,6 +57,12 @@ namespace TresgalloP_GameProgramming2Final.GameLib
 
                 loc.X = worldRef.X + xDimension - 1;
                 tiles[xDimension - 1, i] = new Tile(loc, TileType.Wall);
+
+                if (i == (int)(yDimension / 2) && (worldRef.X != 0 || worldRef.X != 50))
+                {
+                    tiles[0, i] = new Tile(loc, TileType.Door);
+                    tiles[xDimension - 1, i] = new Tile(loc, TileType.Door);
+                }
 
                 loc.Y++;
             }
@@ -72,6 +84,13 @@ namespace TresgalloP_GameProgramming2Final.GameLib
 
                 loc.Y = worldRef.Y + yDimension - 1;
                 tiles[i, yDimension - 1] = new Tile(loc, TileType.Wall);
+
+
+                if (i == (int)(xDimension / 2))
+                {
+                    tiles[i, 0] = new Tile(loc, TileType.Door);
+                    tiles[i, yDimension - 1] = new Tile(loc, TileType.Door);
+                }
 
                 loc.X++;
             }

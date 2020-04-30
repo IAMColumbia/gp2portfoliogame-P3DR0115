@@ -11,6 +11,7 @@ namespace TresgalloP_GameProgramming2Final
     public class Game
     {
         bool isPlaying = true;
+        public static CommandWUndo command = null;
         ConsoleKeyInfo keyInput;
         string consoleInput;
 
@@ -37,6 +38,7 @@ namespace TresgalloP_GameProgramming2Final
         public void Run()
         {
             ShowHelp();
+            world.DisplayAllRooms();
             InputLoop();
         }
 
@@ -86,8 +88,7 @@ namespace TresgalloP_GameProgramming2Final
 
         private static ICommand GetCommandFromKey(ConsoleKeyInfo ki)
         {
-            Command command = null;
-
+            command = null;
             switch (ki.Key)
             {
                 case ConsoleKey.W:
@@ -131,11 +132,11 @@ namespace TresgalloP_GameProgramming2Final
                 "J to fire weapon\n" +
                 "R to reload weapon\n" +
                 "K to melee attack\n" +
-                "N to Shift Movement Type Down (See movement details below)\n" +
-                "M to Shift Movement Type Up (See movement details below)\n" +
+                //"N to Shift Movement Type Down (See movement details below)\n" +
+                //"M to Shift Movement Type Up (See movement details below)\n" +
                 "H to show this help text again\n" +
                 "ESC to leave the game\n\n" +
-                "Movement Details: " +
+                //"Movement Details: " +
                 "Press [Enter] to dismiss this message and continue.");
             Console.ReadLine();
             Console.Clear();

@@ -10,8 +10,6 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern.Commands
         public MoveUpCommand()
         {
             this.CommandName = "Move Up";
-            CommandWUndo undo = new MoveDownCommand();
-            this.UndoCommand = new UndoCommand(undo);
         }
 
         public override void Execute(GameComponent go)
@@ -22,10 +20,19 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern.Commands
 
         public override void UnExecute(GameComponent gc)
         {
-            //gc.MoveDown();
-            //base.UnExecute(gc);
-            //this.UndoCommand = new MoveDownCommand();
-            this.UndoCommand.Execute(gc);
+            CommandWUndo undo = new MoveDownCommand();
+            this.UndoCommand = new UndoCommand(undo);
+            gc.MoveDown();
+            base.UnExecute(gc);
         }
+
+        //public override void UnExecute(GameComponent gc)
+        //{
+        //    //gc.MoveDown();
+        //    //base.UnExecute(gc);
+        //    //this.UndoCommand = new MoveDownCommand();
+        //    gc.MoveDown();
+        //    this.UndoCommand.Execute(gc);
+        //}
     }
 }

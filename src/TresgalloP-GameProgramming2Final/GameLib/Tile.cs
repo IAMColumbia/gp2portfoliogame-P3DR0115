@@ -7,7 +7,7 @@ namespace TresgalloP_GameProgramming2Final.GameLib
 {
     public class Tile
     {
-        Location location;
+        public Location location;
         public TileType tileType;
         char representation;
         public bool occupied;
@@ -65,5 +65,6 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             else
                 return this.entity.representation;
         }
+
     }
 }

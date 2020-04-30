@@ -21,6 +21,7 @@ namespace TresgalloP_GameProgramming2Final.GameLib
         public int xCurrentPlayerRoom, yCurrentPlayerRoom;
         private Player player;
         private List<Character> Entities;
+        private bool InvalidMove;
 
         public World(int xDimension = 50, int yDimension = 50, int zDimension = 1)
         {
@@ -34,6 +35,7 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             AddGeneratedRooms();
 
             Entities = new List<Character>();
+            InvalidMove = false;
         }
 
         private void AddGeneratedRooms(int roomXDim = 10, int roomYDim = 10)
@@ -170,7 +172,7 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             UpdateTileEntity(player);
         }
 
-        public void UpdateTileEntity(Character entity, bool occupied = true)
+        public void UpdateTileEntity(Character entity, bool occupied = true, bool last = false)
         {
             Location locale;
             RoomLocation roomLocale;
@@ -189,37 +191,55 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             int roomX, roomY, tileX, tileY;
             tileX = locale.X;
             tileY = locale.Y;
-            roomX = 0;// roomLocale.xRoom;
-            roomY = 0;// roomLocale.yRoom;
+            roomX = 0;
+            roomY = 0;
 
             CalculateRoomCoordinates(ref roomX, ref roomY, ref tileX, ref tileY);
             //UpdateRoomCoordinates(entity, roomLocale, roomX, roomY);
 
             Tile target = rooms[roomX, roomY].tiles[tileX, tileY];
-            if ((target.occupied && !occupied) || target.tileType == TileType.Wall)
+            if (target.tileType == TileType.Wall || (target.occupied && !last))
             {
-                Console.WriteLine("OOPS");
+                // Can't go to a wall
+                InvalidMove = true;
+                Console.WriteLine("Invalid Tile");
+                try
+                {
+                    Game.command.UnExecute(player);
+                } catch(Exception e)
+                {
+                    // Uninitialized, first-run error
+                }
             }
             else
             {
                 UpdateRoomCoordinates(entity, roomLocale, roomX, roomY);
+
+                if(!last)
+                    entity.locationInfo.UpdateTerrain(target);
+                
+                rooms[roomX, roomY].tiles[tileX, tileY].occupied = occupied;
+                rooms[roomX, roomY].tiles[tileX, tileY].entity = entity;
             }
 
-            rooms[roomX, roomY].tiles[tileX, tileY].occupied = occupied; //rooms[roomLocale.xRoom, roomLocale.yRoom].tiles[tileX, tileY].occupied = occupied;
-            rooms[roomX, roomY].tiles[tileX, tileY].entity = entity; //rooms[roomLocale.xRoom, roomLocale.yRoom].tiles[tileX, tileY].entity = entity;
 
             //rooms[roomXLast, roomYLast].tiles[tileXLast, tileYLast].occupied = false;
         }
 
         public void UpdateEntityTiles()
         {
-            UpdateTileEntity(player);
-            UpdateTileEntity(player, false);
+            InvalidMove = false;
+            UpdateTileEntity(player, true);
+
+            if(!InvalidMove)
+                UpdateTileEntity(player, false, true);
 
             foreach (Character cr in Entities)
             {
+                InvalidMove = false;
                 UpdateTileEntity(cr);
-                UpdateTileEntity(cr, false);
+                if(!InvalidMove)
+                    UpdateTileEntity(cr, false, true);
             }
         }
 

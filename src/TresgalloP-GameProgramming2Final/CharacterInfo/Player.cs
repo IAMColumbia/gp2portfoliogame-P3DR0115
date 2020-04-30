@@ -20,7 +20,9 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
         {
             return $"HP: {this.HealthPoints}\n" +
                 $"Current Location: {this.locationInfo.location.ToTestString()}\n" +
-                $"Prev. Location: {this.locationInfo.lastLocation.ToTestString()}";
+                //$"Prev. Location: {this.locationInfo.lastLocation.ToTestString()}" +
+                $"Current Terrain: {this.locationInfo.CurrentTerrain.tileType.ToString()}";
         }
+
     }
 }

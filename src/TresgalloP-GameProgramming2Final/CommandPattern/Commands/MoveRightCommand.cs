@@ -5,7 +5,7 @@ using TresgalloP_GameProgramming2Final.CharacterInfo;
 
 namespace TresgalloP_GameProgramming2Final.CommandPattern.Commands
 {
-    public class MoveRightCommand : Command
+    public class MoveRightCommand : CommandWUndo
     {
         public MoveRightCommand()
         {
@@ -16,6 +16,14 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern.Commands
         {
             go.MoveRight();
             base.Execute(go);
+        }
+
+        public override void UnExecute(GameComponent gc)
+        {
+            CommandWUndo undo = new MoveLeftCommand();
+            this.UndoCommand = new UndoCommand(undo);
+            gc.MoveLeft();
+            base.UnExecute(gc);
         }
     }
 }

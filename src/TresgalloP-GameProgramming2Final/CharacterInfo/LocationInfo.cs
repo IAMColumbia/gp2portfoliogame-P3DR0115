@@ -11,6 +11,7 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
         public Location lastLocation;
         public RoomLocation roomLocation;
         public RoomLocation roomLastLocation;
+        public Tile CurrentTerrain;
 
         public LocationInfo()
         {
@@ -18,6 +19,12 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
             lastLocation = new Location();
             roomLocation = new RoomLocation();
             roomLastLocation = new RoomLocation();
+            CurrentTerrain = new Tile(location, TileType.Floor);
+        }
+
+        public void UpdateTerrain(Tile terrain)
+        {
+            this.CurrentTerrain = terrain;
         }
     }
 }
