@@ -7,6 +7,6 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern
 {
     public interface ICommand
     {
-        void Execute(GameComponent go);
+        void Execute(Character c);
     }
 }

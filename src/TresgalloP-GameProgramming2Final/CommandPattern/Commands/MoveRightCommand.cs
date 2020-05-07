@@ -12,18 +12,18 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern.Commands
             this.CommandName = "Move Right";
         }
 
-        public override void Execute(GameComponent go)
+        public override void Execute(Character c)
         {
-            go.MoveRight();
-            base.Execute(go);
+            c.MoveRight();
+            base.Execute(c);
         }
 
-        public override void UnExecute(GameComponent gc)
+        public override void UnExecute(Character c)
         {
             CommandWUndo undo = new MoveLeftCommand();
             this.UndoCommand = new UndoCommand(undo);
-            gc.MoveLeft();
-            base.UnExecute(gc);
+            c.MoveLeft();
+            base.UnExecute(c);
         }
     }
 }

@@ -11,10 +11,10 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
         int equippedWeapon { get; set; }
         int ammo { get; set; }
 
-        string Fire();
-        string Reload();
-        string PickUpWeapon(Weapon w);
-        string SwitchWeaponR();
-        string SwitchWeaponL();
+        void Fire();
+        void Reload();
+        void PickUpWeapon(Weapon w);
+        void SwitchWeaponR();
+        void SwitchWeaponL();
     }
 }

@@ -6,7 +6,7 @@ using TresgalloP_GameProgramming2Final.Weapons;
 
 namespace TresgalloP_GameProgramming2Final.CharacterInfo
 {
-    public class Character : GameComponent, CanHoldWeapons
+    public abstract class Character : GameComponent, CanHoldWeapons
     {
         public int HealthPoints;
         public char representation;
@@ -14,6 +14,8 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
         public List<Weapon> weapons { get; set; }
         public int ammo { get; set; }
         public int equippedWeapon { get; set; }
+
+        public string message;
 
         public Character()
         {
@@ -30,64 +32,64 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
             return $"HP: {this.HealthPoints}\n" +
                 $"Current Location: {this.locationInfo.location.ToTestString()}\n" +
                 //$"Prev. Location: {this.locationInfo.lastLocation.ToTestString()}" +
-                $"Current Terrain: {this.locationInfo.CurrentTerrain.tileType.ToString()}";
+                $"Current Terrain: {this.locationInfo.CurrentTerrain.tileType.ToString()}\n" +
+                $"{message}";
         }
 
-        public virtual string Fire()
+        public virtual void Fire()
         {
             if(weapons[equippedWeapon].magCount <= 0)
-                return $"Click Click! {weapons[equippedWeapon].name} is empty!";
-            else 
-                return $"{weapons[equippedWeapon].name} was fired!";
+                message =  $"Click Click! {weapons[equippedWeapon].name} is empty!";
+            else
+                message = $"{weapons[equippedWeapon].name} was fired!";
         }
 
-        public virtual string Reload()
+        public virtual void Reload()
         {
             int ammoRequired = weapons[equippedWeapon].magCapacity - weapons[equippedWeapon].magCount;
             if (ammo == 0)
             {
-                return $"{equippedWeapon} could not be reloaded, you're out of ammo!";
+                message = $"{equippedWeapon} could not be reloaded, you're out of ammo!";
             }
             else if(ammo >= ammoRequired)
             {
                 ammo -= ammoRequired;
                 weapons[equippedWeapon].magCount = weapons[equippedWeapon].magCapacity;
-                return $"{equippedWeapon} was fully reloaded!";
+                message = $"{equippedWeapon} was fully reloaded!";
             }
             else
             {
                 weapons[equippedWeapon].magCount += ammo;
                 ammo = 0;
-                return $"{equippedWeapon} was partially reloaded!";
+                message = $"{equippedWeapon} was partially reloaded!";
             }
         }
 
-        public virtual string PickUpWeapon(Weapon w)
+        public virtual void PickUpWeapon(Weapon w)
         {
             weapons.Add(w);
             equippedWeapon = (weapons.Count - 1);
-
-            return $"{w.name} was picked up!";
+            message = $"{w.name} was picked up!";
         }
 
-        public virtual string SwitchWeaponR()
+        public virtual void SwitchWeaponR()
         {
             if (equippedWeapon < (weapons.Count - 1))
                 equippedWeapon++;
             else
                 equippedWeapon = 0;
 
-            return $"{weapons[equippedWeapon].name} was equipped!";
+            message = $"{weapons[equippedWeapon].name} was equipped!";
         }
 
-        public virtual string SwitchWeaponL()
+        public virtual void SwitchWeaponL()
         {
             if (equippedWeapon > 0)
                 equippedWeapon--;
             else
                 equippedWeapon = (weapons.Count - 1);
 
-            return $"{weapons[equippedWeapon].name} was equipped!";
+            message = $"{weapons[equippedWeapon].name} was equipped!";
         }
     }
 }

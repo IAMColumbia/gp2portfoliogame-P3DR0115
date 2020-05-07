@@ -15,14 +15,14 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern
             //nothing
         }
 
-        public override void Execute(GameComponent gc)
+        public override void Execute(Character c)
         {
-            this.gc = gc;
-            base.Execute(gc);
+            this.gc = c;
+            base.Execute(c);
         }
-        public virtual void UnExecute(GameComponent gc)
+        public virtual void UnExecute(Character c)
         {
-            this.UndoCommand.Execute(gc);
+            this.UndoCommand.Execute(c);
         }
     }
 }

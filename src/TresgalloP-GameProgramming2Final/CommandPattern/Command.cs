@@ -14,7 +14,7 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern
             this.CommandName = "Base Command";
         }
 
-        public virtual void Execute(GameComponent go)
+        public virtual void Execute(Character c)
         {
             this.Log();
         }
@@ -25,11 +25,11 @@ namespace TresgalloP_GameProgramming2Final.CommandPattern
             Console.WriteLine($"{this.CommandName} executed");
         }
 
-        protected virtual void Log(GameComponent go)
+        protected virtual void Log(Character c)
         {
             // Log basic command to console
             this.Log();
-            Console.WriteLine($"on {go.ToString()}");
+            Console.WriteLine($"on {c.ToString()}");
         }
     }
 }

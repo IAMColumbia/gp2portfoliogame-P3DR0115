@@ -70,6 +70,7 @@ namespace TresgalloP_GameProgramming2Final
                         }
                     case ConsoleKey.M:
                         {
+                            Console.Clear();
                             world.DisplayAllRooms();
                             break;
                         }
@@ -80,6 +81,7 @@ namespace TresgalloP_GameProgramming2Final
                     command.Execute(player);
                     WorldUpdate();
                     Console.WriteLine(player.ShowStats());
+                    player.message = "";
 
                     Turn++;
                     //Test();
@@ -124,7 +126,26 @@ namespace TresgalloP_GameProgramming2Final
                 case ConsoleKey.A:
                     {
                         command = new MoveLeftCommand();
-                        // 
+                        break;
+                    }
+                case ConsoleKey.J:
+                    {
+                        command = new FireCommand();
+                        break;
+                    }
+                case ConsoleKey.R:
+                    {
+                        command = new ReloadCommand();
+                        break;
+                    }
+                case ConsoleKey.U:
+                    {
+                        command = new SwitchWeaponLCommand();
+                        break;
+                    }
+                case ConsoleKey.I:
+                    {
+                        command = new SwitchWeaponRCommand();
                         break;
                     }
 
@@ -146,6 +167,7 @@ namespace TresgalloP_GameProgramming2Final
                 "WASD to move\n" +
                 "J to fire weapon\n" +
                 "R to reload weapon\n" +
+                "U and I to switch weapons\n" +
                 "K to melee attack\n" +
                 "M to open World Map\n" +
                 //"N to Shift Movement Type Down (See movement details below)\n" +
