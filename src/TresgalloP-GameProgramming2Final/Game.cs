@@ -5,6 +5,7 @@ using TresgalloP_GameProgramming2Final.GameLib;
 using TresgalloP_GameProgramming2Final.CommandPattern;
 using TresgalloP_GameProgramming2Final.CommandPattern.Commands;
 using TresgalloP_GameProgramming2Final.CharacterInfo;
+using TresgalloP_GameProgramming2Final.Weapons;
 
 namespace TresgalloP_GameProgramming2Final
 {
@@ -30,6 +31,8 @@ namespace TresgalloP_GameProgramming2Final
             world = new World();
             player = new Player();
             world.AddPlayer(ref player);
+            M1911 startingGun = new M1911();
+            player.PickUpWeapon(startingGun);
 
             //world.DisplayAllRooms();
             //Enemy = new BasicGuard(this, Player.);
@@ -39,7 +42,7 @@ namespace TresgalloP_GameProgramming2Final
         public void Run()
         {
             ShowHelp();
-            world.DisplayAllRooms();
+            //world.DisplayAllRooms();
             InputLoop();
         }
 
@@ -65,6 +68,11 @@ namespace TresgalloP_GameProgramming2Final
                             ShowHelp();
                             break;
                         }
+                    case ConsoleKey.M:
+                        {
+                            world.DisplayAllRooms();
+                            break;
+                        }
                 }
 
                 if (command != null && isPlaying)
@@ -72,10 +80,11 @@ namespace TresgalloP_GameProgramming2Final
                     command.Execute(player);
                     WorldUpdate();
                     Console.WriteLine(player.ShowStats());
+
+                    Turn++;
                     //Test();
                 }
 
-                Turn++;
             }
 
             if(winCondition)
@@ -138,6 +147,7 @@ namespace TresgalloP_GameProgramming2Final
                 "J to fire weapon\n" +
                 "R to reload weapon\n" +
                 "K to melee attack\n" +
+                "M to open World Map\n" +
                 //"N to Shift Movement Type Down (See movement details below)\n" +
                 //"M to Shift Movement Type Up (See movement details below)\n" +
                 "H to show this help text again\n" +
