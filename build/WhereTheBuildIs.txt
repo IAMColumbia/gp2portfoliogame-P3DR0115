@@ -1,0 +1,3 @@
+The build can be found at
+
+gp2portfoliogame-P3DR0115\src\TresgalloP-GameProgramming2Final\bin\Release\netcoreapp3.1\publish\TresgalloP-GameProgramming2Final.exe
