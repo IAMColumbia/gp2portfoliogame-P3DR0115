@@ -21,6 +21,7 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
                 $"Current Location: {this.locationInfo.location.ToTestString()}\n" +
                 //$"Prev. Location: {this.locationInfo.lastLocation.ToTestString()}" +
                 $"Current Terrain: {this.locationInfo.CurrentTerrain.tileType.ToString()}\n" +
+                $"Current Weapon: {this.weapons[equippedWeapon].name} [{this.weapons[equippedWeapon].magCount} | {this.ammo}]\n" +
                 $"{message}";
         }
     }

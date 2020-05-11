@@ -41,7 +41,10 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
             if(weapons[equippedWeapon].magCount <= 0)
                 message =  $"Click Click! {weapons[equippedWeapon].name} is empty!";
             else
+            {
                 message = $"{weapons[equippedWeapon].name} was fired!";
+                weapons[equippedWeapon].magCount--;
+            }
         }
 
         public virtual void Reload()
@@ -49,19 +52,19 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
             int ammoRequired = weapons[equippedWeapon].magCapacity - weapons[equippedWeapon].magCount;
             if (ammo == 0)
             {
-                message = $"{equippedWeapon} could not be reloaded, you're out of ammo!";
+                message = $"{weapons[equippedWeapon].name} could not be reloaded, you're out of ammo!";
             }
             else if(ammo >= ammoRequired)
             {
                 ammo -= ammoRequired;
                 weapons[equippedWeapon].magCount = weapons[equippedWeapon].magCapacity;
-                message = $"{equippedWeapon} was fully reloaded!";
+                message = $"{weapons[equippedWeapon].name} was fully reloaded!";
             }
             else
             {
                 weapons[equippedWeapon].magCount += ammo;
                 ammo = 0;
-                message = $"{equippedWeapon} was partially reloaded!";
+                message = $"{weapons[equippedWeapon].name} was partially reloaded!";
             }
         }
 

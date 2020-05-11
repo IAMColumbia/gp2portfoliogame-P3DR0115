@@ -254,17 +254,25 @@ namespace TresgalloP_GameProgramming2Final.GameLib
         public void UpdateEntityTiles()
         {
             InvalidMove = false;
-            UpdateTileEntity(player, true);
+            if(player.movedTile)
+            {
+                UpdateTileEntity(player, true);
+                if (!InvalidMove)
+                    UpdateTileEntity(player, false, true);
+            }
+            player.movedTile = false;
 
-            if(!InvalidMove)
-                UpdateTileEntity(player, false, true);
 
             foreach (Character cr in Entities)
             {
                 InvalidMove = false;
-                UpdateTileEntity(cr);
-                if(!InvalidMove)
-                    UpdateTileEntity(cr, false, true);
+                if(cr.movedTile)
+                {
+                    UpdateTileEntity(cr);
+                    if (!InvalidMove)
+                        UpdateTileEntity(cr, false, true);
+                }
+                cr.movedTile = false;
             }
         }
 

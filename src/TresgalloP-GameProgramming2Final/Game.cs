@@ -21,7 +21,7 @@ namespace TresgalloP_GameProgramming2Final
         private int Turn;
         public World world;
         public static Player player;
-        //public BasicGuard Enemy;
+        public Guard enemy;
 
         public Game()
         {
@@ -30,11 +30,14 @@ namespace TresgalloP_GameProgramming2Final
 
             world = new World();
             player = new Player();
+            enemy = new Guard();
             world.AddPlayer(ref player);
-            M1911 startingGun = new M1911();
-            player.PickUpWeapon(startingGun);
+            M1911 startingSidearm = new M1911();
+            FAL startingPrimary = new FAL();
 
-            //world.DisplayAllRooms();
+            player.PickUpWeapon(startingPrimary);
+            player.PickUpWeapon(startingSidearm);
+
             //Enemy = new BasicGuard(this, Player.);
             Run();
         }
@@ -42,13 +45,13 @@ namespace TresgalloP_GameProgramming2Final
         public void Run()
         {
             ShowHelp();
-            //world.DisplayAllRooms();
             InputLoop();
         }
 
         private void InputLoop()
         {
             world.DisplayRoom();// ref player);
+            player.ShowStats();
 
             while (isPlaying)
             {
@@ -168,12 +171,24 @@ namespace TresgalloP_GameProgramming2Final
                 "J to fire weapon\n" +
                 "R to reload weapon\n" +
                 "U and I to switch weapons\n" +
-                "K to melee attack\n" +
+                //"K to melee attack\n" +
                 "M to open World Map\n" +
                 //"N to Shift Movement Type Down (See movement details below)\n" +
                 //"M to Shift Movement Type Up (See movement details below)\n" +
                 "H to show this help text again\n" +
                 "ESC to leave the game\n\n" +
+                "The objective of the game is to make it to the GOAL (Green 'G' in the map)\n" +
+                "There are enemies along the way!\n\n" +
+                "What do symbols mean? I'm glad you totally asked!\n" +
+                "The player appears as '@'\n" +
+                "Enemies appear as numbers (0-9) based on how much health they have\n" +
+                "Terrain has a variety of symbols:\n" +
+                "'.' = Floor\n" +
+                "'X' = Wall\n" +
+                "'C' = Full cover\n" +
+                "'c' = Light cover\n" +
+                "'B' = Door (Continue walking in the direction of the door to \"Go through\" to the next room)\n" +
+                "'G' = Goal\n" +
                 //"Movement Details: " +
                 "Press [Enter] to dismiss this message and continue.");
             Console.ReadLine();

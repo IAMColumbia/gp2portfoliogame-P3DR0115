@@ -8,10 +8,16 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
     {
         public Guard()
         {
-            this.HealthPoints = 10;
-            this.representation = '@';
+            this.HealthPoints = 25;
+            this.representation = SetRepresentation();
 
             this.ammo = 90;
+        }
+
+        public char SetRepresentation()
+        {
+            int rep = (int)(this.HealthPoints / 10);
+            return Convert.ToChar(rep);
         }
     }
 }
