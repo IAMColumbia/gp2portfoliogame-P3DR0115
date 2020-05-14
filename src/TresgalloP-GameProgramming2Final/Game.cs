@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 using TresgalloP_GameProgramming2Final.GameLib;
 using TresgalloP_GameProgramming2Final.CommandPattern;
 using TresgalloP_GameProgramming2Final.CommandPattern.Commands;
@@ -21,20 +22,29 @@ namespace TresgalloP_GameProgramming2Final
         private int Turn;
         public World world;
         public static Player player;
-        public Guard enemy;
+        public Guard[] enemies;
+        public static Random random;
 
         public Game()
         {
             Console.Title = "Watered Down Roguelike!";
             Turn = 0;
 
+            random = new Random();
             world = new World();
             player = new Player();
-            enemy = new Guard();
+            enemies = new Guard[30];
             world.AddPlayer(ref player);
+            for(int i = 0; i < enemies.Length; i++)
+            {
+                enemies[i] = new Guard();
+                world.AddEnemy(enemies[i]);
+            }
             M1911 startingSidearm = new M1911();
-            FAL startingPrimary = new FAL();
+            AK47 startingPrimary = new AK47();
+            //RPG startingHeavy = new RPG();
 
+            //player.PickUpWeapon(startingHeavy);
             player.PickUpWeapon(startingPrimary);
             player.PickUpWeapon(startingSidearm);
 
@@ -82,9 +92,13 @@ namespace TresgalloP_GameProgramming2Final
                 if (command != null && isPlaying)
                 {
                     command.Execute(player);
+                    if(command is FireCommand && player.landHit)
+                    {
+                        world.CheckShotTrajectory(player, player.direction);
+                    }
                     WorldUpdate();
                     Console.WriteLine(player.ShowStats());
-                    player.message = "";
+                    player.ResetForNextTurn();
 
                     Turn++;
                     //Test();
@@ -131,9 +145,17 @@ namespace TresgalloP_GameProgramming2Final
                         command = new MoveLeftCommand();
                         break;
                     }
-                case ConsoleKey.J:
+                //case ConsoleKey.NumPad1:
+                case ConsoleKey.NumPad2:
+                //case ConsoleKey.NumPad3:
+                case ConsoleKey.NumPad4:
+                case ConsoleKey.NumPad6:
+                //case ConsoleKey.NumPad7:
+                case ConsoleKey.NumPad8:
+                //case ConsoleKey.NumPad9:
                     {
-                        command = new FireCommand();
+                        int fireDir = (int)ki.KeyChar;//(Char.GetNumericValue(ki.KeyChar));
+                        command = new FireCommand((ushort)(fireDir - 48));
                         break;
                     }
                 case ConsoleKey.R:
@@ -168,9 +190,9 @@ namespace TresgalloP_GameProgramming2Final
             Console.Clear();
             Console.WriteLine($"Welcome to {Console.Title}! The controls are...\n" +
                 "WASD to move\n" +
-                "J to fire weapon\n" +
+                "numpad2, numpad4, numpad6, numpad8 to fire weapon\n" +
                 "R to reload weapon\n" +
-                "U and I to switch weapons\n" +
+                "U or I to switch weapons\n" +
                 //"K to melee attack\n" +
                 "M to open World Map\n" +
                 //"N to Shift Movement Type Down (See movement details below)\n" +
@@ -178,7 +200,7 @@ namespace TresgalloP_GameProgramming2Final
                 "H to show this help text again\n" +
                 "ESC to leave the game\n\n" +
                 "The objective of the game is to make it to the GOAL (Green 'G' in the map)\n" +
-                "There are enemies along the way!\n\n" +
+                "There are enemies along the way! Thanks to modern *cough* *cough* technology: ammo is universal!\n\n" +
                 "What do symbols mean? I'm glad you totally asked!\n" +
                 "The player appears as '@'\n" +
                 "Enemies appear as numbers (0-9) based on how much health they have\n" +

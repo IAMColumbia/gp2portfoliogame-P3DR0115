@@ -9,6 +9,7 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
     {
         public Player()
         {
+            this.ID = -1;
             this.HealthPoints = 100;
             this.representation = '@';
 
@@ -24,5 +25,11 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
                 $"Current Weapon: {this.weapons[equippedWeapon].name} [{this.weapons[equippedWeapon].magCount} | {this.ammo}]\n" +
                 $"{message}";
         }
+
+        //public override char SetRepresentation()
+        //{
+        //    int rep = (int)(this.HealthPoints / 10);
+        //    return Convert.ToChar(rep.ToString());
+        //}
     }
 }

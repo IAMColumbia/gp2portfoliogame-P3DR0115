@@ -7,9 +7,9 @@ namespace TresgalloP_GameProgramming2Final.Weapons
     public abstract class Weapon
     {
         public string name;
-        public int damage;
-        public int accuracy;
-        public int magCapacity;
-        public int magCount;
+        public ushort damage;
+        public ushort accuracy;
+        public ushort magCapacity;
+        public ushort magCount;
     }
 }

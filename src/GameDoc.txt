@@ -1,0 +1,21 @@
+Game Name: Watered Down Roguelike!
+
+Game Description (Short):
+Text-based roguelike game in  which the player walkes thorough a randomly generated world in search of the exit.
+
+Game Description (Long):
+In this game, the player can move and shoot in the four cardinal directions (N,S,E,W).
+The game's world is randomly generated with a goal placed randomly within.
+The player always starts in the same room, in the north-west corner.
+Enemies show up in the game as a digit (0-9) that represents how much hp they have rounded down to the nearest 10. (ex. 5 hp rounds down to 0 and 59 hp rounds down to 5 when showing up on the map)
+When shooting, the game calculates if the shot should hit/miss based on what the gun's accuracy stat and the potential target's cover (if applicable).
+The game's help menu (Press [H] in the game menu) details more about what the player may want to know for playing, including controls for the game.
+
+Credits:
+https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/ for learning about new code
+
+Genre:
+Text-based Roguelike/Roguelite
+
+
+

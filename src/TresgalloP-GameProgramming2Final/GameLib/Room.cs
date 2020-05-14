@@ -22,12 +22,12 @@ namespace TresgalloP_GameProgramming2Final.GameLib
         {
             tiles = new Tile[xDimension, yDimension];
             // Get edges
-            Location loc = new Location(World.xCurrentGen, World.yCurrentGen, World.zCurrentGen);
-            Location worldRef = new Location(World.xCurrentGen, World.yCurrentGen, World.zCurrentGen); ; // Save the "corner" coordinates.
+            Location loc = new Location(World.xCurrentRoomDraw, World.yCurrentRoomDraw, World.zCurrentGen);
+            Location worldRef = new Location(World.xCurrentRoomDraw, World.yCurrentRoomDraw, World.zCurrentGen); // Save the "corner" coordinates.
             for (int i = 0; i < yDimension; i++)
             {
-
-                loc.X = worldRef.X;
+                loc = new Location(worldRef.X, loc.Y, loc.Z);
+                //loc.X = worldRef.X;
                 //if(worldRef.X == 0)
 
                 //if(loc.X != 0 && i != (int)(xDimension/2))
@@ -46,7 +46,7 @@ namespace TresgalloP_GameProgramming2Final.GameLib
 
                 //if (i == (int)(xDimension / 2) && (loc.Y == yDimension - 1))
                 //    tiles[0, i] = new Tile(loc, TileType.Door);
-                
+
                 //else
                 //    tiles[0, i] = new Tile(loc, TileType.Door);
 
@@ -54,8 +54,10 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 //    tiles[0, i] = new Tile(loc, TileType.Wall);
                 //else
                 //    tiles[0, i] = new Tile(loc, TileType.Door);
-
-                loc.X = worldRef.X + xDimension - 1;
+                
+                
+                loc = new Location((worldRef.X + xDimension - 1), loc.Y, loc.Z);
+                //loc.X = worldRef.X + xDimension - 1;
                 tiles[xDimension - 1, i] = new Tile(loc, TileType.Wall);
 
                 if (i == (int)(yDimension / 2) && (worldRef.X != 0 || worldRef.X != 50))
@@ -63,13 +65,14 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                     tiles[0, i] = new Tile(loc, TileType.Door);
                     tiles[xDimension - 1, i] = new Tile(loc, TileType.Door);
                 }
-
-                loc.Y++;
+                loc = new Location(loc.X, (loc.Y + 1), loc.Z);
+                //loc.Y++;
             }
 
             for (int i = 0; i < xDimension; i++)
             {
-                loc.Y = worldRef.Y;
+                loc = new Location(loc.X, worldRef.Y, loc.Z);
+                //loc.Y = worldRef.Y;
                 //tiles[i, 0] = new Tile(loc, TileType.Wall);
 
                 //if (loc.Y != 0 && i != (int)(yDimension / 2))
@@ -82,7 +85,8 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 //else
                 //    tiles[i, 0] = new Tile(loc, TileType.Door);
 
-                loc.Y = worldRef.Y + yDimension - 1;
+                loc = new Location(loc.X, (worldRef.Y + yDimension - 1), loc.Z);
+                //loc.Y = worldRef.Y + yDimension - 1;
                 tiles[i, yDimension - 1] = new Tile(loc, TileType.Wall);
 
 
@@ -92,11 +96,13 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                     tiles[i, yDimension - 1] = new Tile(loc, TileType.Door);
                 }
 
-                loc.X++;
+                loc = new Location((loc.X + 1), loc.Y, loc.Z);
+                //loc.X++;
             }
 
-            loc.X = worldRef.X + 1;
-            loc.Y = worldRef.Y + 1;
+            loc = new Location(worldRef.X, worldRef.Y, loc.Z);
+            //loc.X = worldRef.X + 1;
+            //loc.Y = worldRef.Y + 1;
             // Dimension-1 becauase the edges are already assigned.
             for (int ver = 1; ver < (yDimension - 1); ver++)
             {
@@ -110,9 +116,11 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                     //        )
                     //    tiles[hor, ver].tileType = TileType.Door;
 
-                    loc.X++;
+                    loc = new Location((loc.X + 1), loc.Y, loc.Z);
+                    //loc.X++;
                 }
-                loc.Y++;
+                loc = new Location(loc.X, (loc.Y + 1), loc.Z);
+                //loc.Y++;
             }
         }
 

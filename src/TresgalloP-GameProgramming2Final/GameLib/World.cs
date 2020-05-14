@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 using TresgalloP_GameProgramming2Final.CharacterInfo;
 
@@ -52,6 +55,12 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                 yCurrentRoomDraw++;
             }
 
+            SetRandomGoalLocation();
+
+        }
+
+        private void SetRandomGoalLocation()
+        {
             Random r = new Random();
             int x, y, a, b;
             x = r.Next(rooms.GetLength(0));
@@ -69,7 +78,6 @@ namespace TresgalloP_GameProgramming2Final.GameLib
 
             rooms[x, y].tiles[a, b].tileType = TileType.Goal;
             rooms[x, y].tiles[a, b].UpdateTileRepresentation(TileType.Goal);
-
         }
 
         public void DisplayAllRooms()
@@ -102,28 +110,6 @@ namespace TresgalloP_GameProgramming2Final.GameLib
 
         public void DisplayRoom()//ref Player focusEntity)
         {
-            //Location locale = focusEntity.locationInfo.location;
-            //RoomLocation roomLocale = focusEntity.locationInfo.roomLocation;
-
-            //int roomX, roomY, tileX, tileY;
-            //tileX = locale.X;
-            //tileY = locale.Y;
-            //roomX = 0;// roomLocale.xRoom;
-            //roomY = 0;// roomLocale.yRoom;
-
-            //CalculateRoomCoordinates(ref roomX, ref roomY, ref tileX, ref tileY);
-
-            //Tile target = rooms[roomX, roomY].tiles[tileX, tileY];
-
-            //if (target.occupied || target.tileType == TileType.Wall)
-            //{
-
-            //}
-            //else
-            //{
-            //    UpdateRoomCoordinates(focusEntity, roomLocale, roomX, roomY);
-            //}
-
             rooms[player.locationInfo.roomLocation.xRoom, player.locationInfo.roomLocation.yRoom].DisplayRoom(true);
         }
 
@@ -179,10 +165,11 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             }
         }
 
-        public void AddEntity(ref Character entity)
+        public void AddEnemy(Character entity)
         {
             Entities.Add(entity);
-            UpdateTileEntity(entity);//, true);
+            SetRandomLocation();
+            UpdateTileEntity(entity, true, false, true);//, true);
         }
 
         public void AddPlayer(ref Player player)
@@ -191,7 +178,34 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             UpdateTileEntity(player);
         }
 
-        public void UpdateTileEntity(Character entity, bool occupied = true, bool last = false)
+        public void SetRandomLocation()
+        {
+            int x, y, a, b;
+            x = Game.random.Next(rooms.GetLength(0));
+            y = Game.random.Next(rooms.GetLength(1));
+
+            TileType targetType;
+
+            do
+            {
+                do
+                {
+                    a = Game.random.Next(rooms[x, y].xDimension - 2);
+                } while (a == 0);
+
+                do
+                {
+                    b = Game.random.Next(rooms[x, y].yDimension - 2);
+                } while (b == 0);
+
+
+                targetType = rooms[x, y].tiles[a, b].tileType;
+            } while (targetType == TileType.Wall || targetType == TileType.Occupied || targetType == TileType.Goal);
+
+            Entities.Last().locationInfo.location = Entities.Last().locationInfo.lastLocation = new Location((10 * x) + a, (10 * y) + b);
+        }
+
+        public void UpdateTileEntity(Character entity, bool occupied = true, bool last = false, bool force = false)
         {
             Location locale;
             RoomLocation roomLocale;
@@ -251,6 +265,128 @@ namespace TresgalloP_GameProgramming2Final.GameLib
             //rooms[roomXLast, roomYLast].tiles[tileXLast, tileYLast].occupied = false;
         }
 
+        public void CheckShotTrajectory(Character c, ushort direction)
+        {
+            int roomX, roomY, tileX, tileY;
+            tileX = c.locationInfo.location.X;
+            tileY = c.locationInfo.location.Y;
+            roomX = 0;
+            roomY = 0;
+
+            CalculateRoomCoordinates(ref roomX, ref roomY, ref tileX, ref tileY);
+
+            int x, y, xStep = 0, yStep = 0;
+            bool hitDone = false;
+            
+            switch(direction)
+            {
+                case 1:
+                    {
+                        xStep = -1;
+                        yStep = 1;
+                        break;
+                    }
+                case 2:
+                    {
+                        yStep = 1;
+                        break;
+                    }
+                case 4:
+                    {
+                        xStep = -1;
+                        break;
+                    }
+                case 6:
+                    {
+                        xStep = 1;
+                        break;
+                    }
+                case 8:
+                    {
+                        yStep = -1;
+                        break;
+                    }
+            }
+
+            for(y = (tileY + yStep); y < rooms[roomX, roomY].yDimension; y += yStep)
+            {
+                if (y < 0)//|| rooms[roomX, roomY].tiles[x, y].tileType == TileType.Wall)
+                    break; // actually checking backwards or bullet hit a wall.
+
+                for (x = (tileX + xStep); x < rooms[roomX, roomY].xDimension; x += xStep)
+                {
+                    if (x < 0 || rooms[roomX, roomY].tiles[x, y].tileType == TileType.Wall)
+                    {
+                        if(!hitDone)
+                            c.message += " Shot hit a wall...!";
+                        
+                        break; // actually checking backwards or bullet hit a wall.
+                    }
+                    
+                    if(rooms[roomX, roomY].tiles[x, y].tileType == TileType.Occupied || rooms[roomX, roomY].tiles[x, y].occupied)
+                    {
+                        if(rooms[roomX, roomY].tiles[x, y].tileType == TileType.LightCover)
+                        {
+                            if((c.shotAccuracy + Tile.lightCoverBonus) < c.weapons[c.equippedWeapon].accuracy)
+                            {
+                                TargetTakesDamage(c, roomX, roomY, x, y, ref hitDone);
+                            }
+                            else
+                            {
+                                // Cover protected target
+                                c.message += "\nShot missed, hit the cover!";
+                            }
+                        }
+                        else if (rooms[roomX, roomY].tiles[x, y].tileType == TileType.FullCover)
+                        {
+                            if ((c.shotAccuracy + Tile.fullCoverBonus) < c.weapons[c.equippedWeapon].accuracy)
+                            {
+                                TargetTakesDamage(c, roomX, roomY, x, y, ref hitDone);
+                            }
+                            else
+                            {
+                                // Cover protected target
+                                c.message += "\nShot missed, hit the cover!";
+                            }
+                        }
+                        else
+                        {
+                            TargetTakesDamage(c, roomX, roomY, x, y, ref hitDone);
+                        }
+                    }
+
+                    if (xStep == 0) // in case of "straight" horizontal shot
+                        break;
+                }
+                //if (y < 0 )//|| rooms[roomX, roomY].tiles[x, y].tileType == TileType.Wall)
+                //    break; // actually checking backwards or bullet hit a wall.
+                if (yStep == 0) // in case of "straight" vertical shot
+                    break;
+            }
+        }
+
+        private void TargetTakesDamage(Character c, int roomX, int roomY, int x, int y, ref bool hitDone)
+        {
+            rooms[roomX, roomY].tiles[x, y].entity.TakeDamage(c.weapons[c.equippedWeapon].damage);
+            c.message += $"Shot Hit! Target took {c.weapons[c.equippedWeapon].damage} damage!";
+            if(rooms[roomX, roomY].tiles[x, y].entity.HealthPoints <= 0)
+            {
+                //target died
+                c.message += " Target was killed!";
+                rooms[roomX, roomY].tiles[x, y].occupied = false;
+                foreach(Guard cr in Entities)
+                {
+                    if(cr.ID == rooms[roomX, roomY].tiles[x, y].entity.ID)
+                    {
+                        Entities.Remove(cr);
+                        break;
+                    }    
+                }
+                rooms[roomX, roomY].tiles[x, y].entity = null;
+            }
+            hitDone = true;
+        }
+
         public void UpdateEntityTiles()
         {
             InvalidMove = false;
@@ -271,6 +407,10 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                     UpdateTileEntity(cr);
                     if (!InvalidMove)
                         UpdateTileEntity(cr, false, true);
+                }
+                if(player.landHit && cr is Guard)
+                {
+                    cr.representation = cr.SetRepresentation();
                 }
                 cr.movedTile = false;
             }

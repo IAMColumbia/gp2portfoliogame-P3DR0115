@@ -8,10 +8,13 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
     public interface CanHoldWeapons
     {
         List<Weapon> weapons { get; set; }
-        int equippedWeapon { get; set; }
-        int ammo { get; set; }
+        ushort equippedWeapon { get; set; }
+        ushort ammo { get; set; }
+        ushort direction { get; set; }
+        int shotAccuracy { get; set; }
+        bool landHit { get; set; }
 
-        void Fire();
+        void Fire(ushort direction);
         void Reload();
         void PickUpWeapon(Weapon w);
         void SwitchWeaponR();

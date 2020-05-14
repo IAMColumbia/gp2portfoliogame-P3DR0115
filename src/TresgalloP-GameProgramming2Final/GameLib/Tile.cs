@@ -7,6 +7,8 @@ namespace TresgalloP_GameProgramming2Final.GameLib
 {
     public class Tile
     {
+        public static int lightCoverBonus = 10;
+        public static int fullCoverBonus = 15;
         public Location location;
         public TileType tileType;
         char representation;

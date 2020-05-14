@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using TresgalloP_GameProgramming2Final.GameLib;
 using TresgalloP_GameProgramming2Final.Weapons;
@@ -8,12 +9,16 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
 {
     public abstract class Character : GameComponent, CanHoldWeapons
     {
+        public double ID;
         public int HealthPoints;
         public char representation;
 
         public List<Weapon> weapons { get; set; }
-        public int ammo { get; set; }
-        public int equippedWeapon { get; set; }
+        public ushort ammo { get; set; }
+        public ushort equippedWeapon { get; set; }
+        public ushort direction { get; set; }
+        public int shotAccuracy { get; set; }
+        public bool landHit { get; set; }
 
         public string message;
 
@@ -36,20 +41,52 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
                 $"{message}";
         }
 
-        public virtual void Fire()
+        public virtual char SetRepresentation()
         {
+            int rep = (int)(this.HealthPoints / 10);
+            return Convert.ToChar(rep.ToString());
+        }
+
+        public void TakeDamage(int damage)
+        {
+            this.HealthPoints -= damage;
+        }
+
+        public virtual void Fire(ushort direction)
+        {
+            this.direction = direction;
             if(weapons[equippedWeapon].magCount <= 0)
                 message =  $"Click Click! {weapons[equippedWeapon].name} is empty!";
             else
             {
                 message = $"{weapons[equippedWeapon].name} was fired!";
                 weapons[equippedWeapon].magCount--;
+                shotAccuracy = Game.random.Next(100);
+                if(shotAccuracy >= weapons[equippedWeapon].accuracy)
+                {
+                    // miss
+                    landHit = false;
+                    message += " Shot hit a wall...!";
+                }
+                else
+                {
+                    //possible hit
+                    landHit = true;
+                    //message += $"\n {weapons[equippedWeapon].name} hit!";
+                }
             }
+        }
+
+        public void ResetForNextTurn()
+        {
+            message = "";
+            this.direction = 5;
+            landHit = false;
         }
 
         public virtual void Reload()
         {
-            int ammoRequired = weapons[equippedWeapon].magCapacity - weapons[equippedWeapon].magCount;
+            ushort ammoRequired = (ushort)(weapons[equippedWeapon].magCapacity - weapons[equippedWeapon].magCount);
             if (ammo == 0)
             {
                 message = $"{weapons[equippedWeapon].name} could not be reloaded, you're out of ammo!";
@@ -71,15 +108,18 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
         public virtual void PickUpWeapon(Weapon w)
         {
             weapons.Add(w);
-            equippedWeapon = (weapons.Count - 1);
+            equippedWeapon = (ushort)(weapons.Count - 1);
             message = $"{w.name} was picked up!";
         }
 
         public virtual void SwitchWeaponR()
         {
-            if (equippedWeapon < (weapons.Count - 1))
-                equippedWeapon++;
-            else
+            //if (equippedWeapon < (weapons.Count - 1))
+            //    equippedWeapon++;
+            //else
+            //    equippedWeapon = 0;
+            equippedWeapon++;
+            if (equippedWeapon >= weapons.Count)
                 equippedWeapon = 0;
 
             message = $"{weapons[equippedWeapon].name} was equipped!";
@@ -87,10 +127,13 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
 
         public virtual void SwitchWeaponL()
         {
-            if (equippedWeapon > 0)
-                equippedWeapon--;
-            else
-                equippedWeapon = (weapons.Count - 1);
+            //if (equippedWeapon > 0)
+            //    equippedWeapon--;
+            //else
+            //    equippedWeapon = (ushort)(weapons.Count - 1);
+            equippedWeapon--;
+            if (equippedWeapon <= 0)
+                equippedWeapon = (ushort)(weapons.Count - 1);
 
             message = $"{weapons[equippedWeapon].name} was equipped!";
         }
