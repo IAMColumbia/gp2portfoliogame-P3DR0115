@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 using TresgalloP_GameProgramming2Final.CharacterInfo;
+using TresgalloP_GameProgramming2Final.CommandPattern.Commands;
 
 namespace TresgalloP_GameProgramming2Final.GameLib
 {
@@ -368,7 +369,18 @@ namespace TresgalloP_GameProgramming2Final.GameLib
         private void TargetTakesDamage(Character c, int roomX, int roomY, int x, int y, ref bool hitDone)
         {
             rooms[roomX, roomY].tiles[x, y].entity.TakeDamage(c.weapons[c.equippedWeapon].damage);
+            
+            foreach(Guard cr in Entities)
+            {
+                if (cr.ID == rooms[roomX, roomY].tiles[x, y].entity.ID)
+                {
+                    cr.gotShot = true;
+                    break;
+                }
+            }
+
             c.message += $"Shot Hit! Target took {c.weapons[c.equippedWeapon].damage} damage!";
+
             if(rooms[roomX, roomY].tiles[x, y].entity.HealthPoints <= 0)
             {
                 //target died
@@ -408,9 +420,38 @@ namespace TresgalloP_GameProgramming2Final.GameLib
                     if (!InvalidMove)
                         UpdateTileEntity(cr, false, true);
                 }
-                if(player.landHit && cr is Guard)
+                if(player.landHit && cr is Guard && cr.gotShot)
                 {
                     cr.representation = cr.SetRepresentation();
+                    ushort eDir = 2;
+                    switch(player.direction)
+                    {
+                        case 2:
+                            {
+                                eDir = 8;
+                                break;
+                            }
+                        case 4:
+                            {
+                                eDir = 6;
+                                break;
+                            }
+                        case 6:
+                            {
+                                eDir = 4;
+                                break;
+                            }
+                        case 8:
+                            {
+                                eDir = 2;
+                                break;
+                            }
+                    }
+
+                    FireCommand fr = new FireCommand(eDir);
+                    fr.Execute(cr);
+                    CheckShotTrajectory(cr, eDir);
+                    cr.gotShot = false;
                 }
                 cr.movedTile = false;
             }

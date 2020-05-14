@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TresgalloP_GameProgramming2Final.Weapons;
 
 namespace TresgalloP_GameProgramming2Final.CharacterInfo
 {
@@ -11,7 +12,8 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
             ID = Game.random.NextDouble();
             this.HealthPoints = 25 + Game.random.Next(55);
             this.representation = SetRepresentation();
-
+            AK47 ak = new AK47();
+            this.weapons.Add(ak);
             this.ammo = 90;
         }
 

@@ -19,6 +19,7 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
         public ushort direction { get; set; }
         public int shotAccuracy { get; set; }
         public bool landHit { get; set; }
+        public bool gotShot { get; set; }
 
         public string message;
 
@@ -47,7 +48,7 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
             return Convert.ToChar(rep.ToString());
         }
 
-        public void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage)
         {
             this.HealthPoints -= damage;
         }

@@ -97,8 +97,13 @@ namespace TresgalloP_GameProgramming2Final
                         world.CheckShotTrajectory(player, player.direction);
                     }
                     WorldUpdate();
-                    Console.WriteLine(player.ShowStats());
-                    player.ResetForNextTurn();
+                    if (player.HealthPoints <= 0)
+                        isPlaying = false;
+                    else
+                    {
+                        Console.WriteLine(player.ShowStats());
+                        player.ResetForNextTurn();
+                    }
 
                     Turn++;
                     //Test();
@@ -109,6 +114,10 @@ namespace TresgalloP_GameProgramming2Final
             if(winCondition)
             {
                 Console.WriteLine("YOU WIN! You reached the goal!");
+            }
+            else
+            {
+                Console.WriteLine("You lost... Try again!");
             }
         }
 

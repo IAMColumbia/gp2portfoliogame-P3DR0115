@@ -26,6 +26,12 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
                 $"{message}";
         }
 
+        public override void TakeDamage(int damage)
+        {
+            base.TakeDamage(damage);
+            this.message += $"\n Got shot, took {damage} damage";
+        }
+
         //public override char SetRepresentation()
         //{
         //    int rep = (int)(this.HealthPoints / 10);

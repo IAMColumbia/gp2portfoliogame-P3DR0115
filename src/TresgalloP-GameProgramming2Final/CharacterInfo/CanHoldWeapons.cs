@@ -13,6 +13,7 @@ namespace TresgalloP_GameProgramming2Final.CharacterInfo
         ushort direction { get; set; }
         int shotAccuracy { get; set; }
         bool landHit { get; set; }
+        bool gotShot { get; set; }
 
         void Fire(ushort direction);
         void Reload();
